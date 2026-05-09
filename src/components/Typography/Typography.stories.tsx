@@ -11,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof Typography>;
 
-export const Showcase: Story = {
+export const Basic: Story = {
   argTypes: {
     color: {
       options: ["primary", "secondary", "default"],
