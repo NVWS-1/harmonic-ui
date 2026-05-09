@@ -12,7 +12,7 @@ export default meta;
 
 type Story = StoryObj<typeof Surface>;
 
-export const Showcase: Story = {
+export const Basic: Story = {
   render: () => (
     <Box
       sx={{

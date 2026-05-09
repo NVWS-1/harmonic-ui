@@ -1,6 +1,5 @@
 import React from "react";
-import { resolveSx } from "../../system";
-import { useTheme } from "../../theme/ThemeProvider";
+import { createClassName, resolveSx } from "../../system";
 
 type BoxProps = React.HTMLAttributes<HTMLDivElement> & {
   sx?: any;
@@ -16,15 +15,13 @@ const baseStyle: React.CSSProperties = {
 };
 
 export const Box = ({ sx, fullWidth, style, ...rest }: BoxProps) => {
-  const theme = useTheme();
-
   const resolvedStyle = resolveSx(sx);
 
   if (!resolvedStyle.minWidth && fullWidth) resolvedStyle.minWidth = "100%";
 
   return (
     <div
-      className="harmonic-box-root"
+      className={createClassName("box", "root")}
       style={{ ...baseStyle, ...resolvedStyle, ...style }}
       {...rest}
     />

@@ -22,7 +22,7 @@ type TypographyProps = React.HTMLAttributes<HTMLElement> & {
 export const Typography = ({
   variant = "body",
   as,
-  color = "primary",
+  color,
   contrast = false,
   style,
   children,
@@ -60,7 +60,7 @@ export const Typography = ({
         fontWeight: variantStyle.fontWeight,
         lineHeight: variantStyle.lineHeight,
         opacity: variant === "caption" ? 0.6 : 1,
-        ...resolveColor(),
+        ...(color && resolveColor()),
         ...style,
       }}
       {...rest}
