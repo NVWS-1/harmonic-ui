@@ -46,6 +46,12 @@ export const Basic: Story = {
         <Button elevation={3}>3</Button>
         <Button elevation={4}>4</Button>
       </Flow>
+
+      <Typography variant="h1">Square</Typography>
+      <Flow direction="horizontal" gap={2} distribute="around">
+        <Button>False</Button>
+        <Button square>True</Button>
+      </Flow>
     </Flow>
   ),
 };
