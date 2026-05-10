@@ -11,12 +11,12 @@ type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
   size?: "sm" | "md" | "lg";
   elevation?: 0 | 1 | 2 | 3 | 4;
   toggle?: boolean;
+  square?: boolean;
   onClick?: () => void;
 };
 
 const baseStyle: CSSProperties = {
   boxSizing: "border-box",
-  borderRadius: "16px",
 };
 
 export const Button = ({
@@ -26,6 +26,7 @@ export const Button = ({
   size = "md",
   elevation = 1,
   toggle = false,
+  square = false,
   onClick,
   style,
   children,
@@ -59,12 +60,12 @@ export const Button = ({
               ? alpha(theme.palette[color].main, 0.18)
               : alpha(theme.palette[color].main, 0.12),
           color: theme.palette[color].main,
-          border: `1px solid ${theme.palette[color].main}33`,
+          border: `1px solid ${alpha(theme.palette[color].main, 0.03)}`,
           borderColor: active
             ? alpha(theme.palette[color].main, 0.85)
             : hovered
               ? alpha(theme.palette[color].main, 0.7)
-              : "inherit",
+              : alpha(theme.palette[color].main, 0.33),
         };
 
       case "outline":
@@ -137,6 +138,8 @@ export const Button = ({
     fontFamily: theme.typography.fontFamily,
     fontWeight: 600,
     lineHeight: 1,
+
+    borderRadius: square ? "0px" : "16px",
 
     ...resolveVariant(),
     ...resolveSize(),
