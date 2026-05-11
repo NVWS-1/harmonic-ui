@@ -1,4 +1,4 @@
-import { alpha, createClassName, darken, resolveSx } from "../../system";
+import { alpha, createClassName, darken, resolveSx, usePressable } from "../../system";
 import { useTheme } from "../../theme/ThemeProvider";
 import React, { CSSProperties, useState } from "react";
 
@@ -34,8 +34,7 @@ export const Button = ({
 }: ButtonProps) => {
   const theme = useTheme();
 
-  const [hovered, setHovered] = useState<boolean>(false);
-  const [active, setActive] = useState<boolean>(false);
+  const { hovered, pressed, pressableProps } = usePressable({ onPress: onClick});
 
   const resolvedStyle = resolveSx(sx);
 
@@ -43,7 +42,7 @@ export const Button = ({
     switch (variant) {
       case "solid":
         return {
-          backgroundColor: active
+          backgroundColor: pressed
             ? darken(theme.palette[color].main, 0.4)
             : hovered
               ? darken(theme.palette[color].main)
@@ -54,14 +53,14 @@ export const Button = ({
 
       case "soft":
         return {
-          backgroundColor: active
+          backgroundColor: pressed
             ? alpha(theme.palette[color].main, 0.28)
             : hovered
               ? alpha(theme.palette[color].main, 0.18)
               : alpha(theme.palette[color].main, 0.12),
           color: theme.palette[color].main,
           border: `1px solid ${alpha(theme.palette[color].main, 0.03)}`,
-          borderColor: active
+          borderColor: pressed
             ? alpha(theme.palette[color].main, 0.85)
             : hovered
               ? alpha(theme.palette[color].main, 0.7)
@@ -70,14 +69,14 @@ export const Button = ({
 
       case "outline":
         return {
-          backgroundColor: active
+          backgroundColor: pressed
             ? alpha(theme.palette[color].main, 0.16)
             : hovered
               ? alpha(theme.palette[color].main, 0.08)
               : "transparent",
           color: theme.palette[color].main,
           border: `2px solid ${theme.palette[color].main}`,
-          borderColor: active
+          borderColor: pressed
             ? alpha(theme.palette[color].main, 1)
             : hovered
               ? alpha(theme.palette[color].main, 0.8)
@@ -86,7 +85,7 @@ export const Button = ({
 
       case "ghost": {
         return {
-          backgroundColor: active
+          backgroundColor: pressed
             ? alpha(theme.palette[color].main, 0.16)
             : hovered
               ? alpha(theme.palette[color].main, 0.08)
@@ -145,11 +144,6 @@ export const Button = ({
     ...resolveSize(),
   };
 
-  const handleMouseEnter = () => setHovered(true);
-  const handleMouseLeave = () => setHovered(false);
-  const handleMouseDown = () => setActive(true);
-  const handleMouseUp = () => setActive(false);
-
   const handleOnClick = () => {
     // TODO
   };
@@ -158,11 +152,7 @@ export const Button = ({
     <button
       className={createClassName("button", "root")}
       style={{ ...baseStyle, ...buttonStyle, ...resolvedStyle, ...style }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onClick={handleOnClick}
+      {...pressableProps}
       {...rest}
     >
       {children}
