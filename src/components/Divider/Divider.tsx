@@ -52,6 +52,22 @@ export const Divider = ({
       {...rest}
     />
   ) : (
-    <div style={{ ...resolvedStyle, ...style }} {...rest} />
+    <div
+      role="separator"
+      aria-orientation="vertical"
+      style={{
+        flexShrink: 0,
+
+        width: `${thickness}px`,
+        alignSelf: "stretch",
+
+        borderRadius: "999px",
+
+        ...resolveColor(),
+        ...resolvedStyle,
+        ...style,
+      }}
+      {...rest}
+    />
   );
 };

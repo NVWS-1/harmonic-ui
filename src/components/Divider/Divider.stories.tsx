@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { Divider } from "./Divider";
+import { Box } from "../Box";
 
 const meta: Meta<typeof Divider> = {
   title: "Components/Divider",
@@ -29,5 +30,14 @@ export const Basic: Story = {
       control: { type: "inline-radio" },
     },
   },
-  render: (args) => <Divider {...args} />,
+  render: (args) => (
+    <div
+      style={{
+        display: "flex",
+        height: "120px",
+      }}
+    >
+      <Divider {...args} />
+    </div>
+  ),
 };
