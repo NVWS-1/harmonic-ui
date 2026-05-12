@@ -9,7 +9,7 @@ export const theme = {
       contrastText: "#ffffff",
     },
     default: {
-      main: "#000",
+      main: "#000000",
       contrastText: "#fff",
     },
     background: {
