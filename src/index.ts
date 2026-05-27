@@ -9,3 +9,4 @@ export * from "./components/Flow";
 export * from "./components/Surface";
 export * from "./components/Divider";
 export * from "./components/Button";
+export * from "./components/Checkbox";

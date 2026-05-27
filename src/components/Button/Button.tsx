@@ -12,6 +12,7 @@ type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & {
   elevation?: 0 | 1 | 2 | 3 | 4;
   toggle?: boolean;
   square?: boolean;
+  disabled?: boolean;
   onClick?: () => void;
 };
 
@@ -27,6 +28,7 @@ export const Button = ({
   elevation = 1,
   toggle = false,
   square = false,
+  disabled = false,
   onClick,
   style,
   children,
@@ -34,7 +36,7 @@ export const Button = ({
 }: ButtonProps) => {
   const theme = useTheme();
 
-  const { hovered, pressed, pressableProps } = usePressable({ onPress: onClick});
+  const { hovered, pressed, pressableProps } = usePressable({ onPress: onClick, disabled });
 
   const resolvedStyle = resolveSx(sx);
 
@@ -42,55 +44,71 @@ export const Button = ({
     switch (variant) {
       case "solid":
         return {
-          backgroundColor: pressed
-            ? darken(theme.palette[color].main, 0.4)
-            : hovered
-              ? darken(theme.palette[color].main)
-              : theme.palette[color].main,
+          backgroundColor: disabled
+            ? theme.palette.text.disabled
+            : pressed
+              ? darken(theme.palette[color].main, 0.4)
+              : hovered
+                ? darken(theme.palette[color].main)
+                : theme.palette[color].main,
           color: theme.palette[color].contrastText,
           border: "none",
         };
 
       case "soft":
         return {
-          backgroundColor: pressed
-            ? alpha(theme.palette[color].main, 0.28)
-            : hovered
-              ? alpha(theme.palette[color].main, 0.18)
-              : alpha(theme.palette[color].main, 0.12),
-          color: theme.palette[color].main,
+          backgroundColor: disabled
+            ? alpha(theme.palette.text.disabled, 0.18)
+              : pressed
+                ? alpha(theme.palette[color].main, 0.28)
+                : hovered
+                  ? alpha(theme.palette[color].main, 0.18)
+                  : alpha(theme.palette[color].main, 0.12),
+          color: disabled ? theme.palette.text.disabled : theme.palette[color].main,
           border: `1px solid ${alpha(theme.palette[color].main, 0.03)}`,
-          borderColor: pressed
-            ? alpha(theme.palette[color].main, 0.85)
-            : hovered
-              ? alpha(theme.palette[color].main, 0.7)
-              : alpha(theme.palette[color].main, 0.33),
+          borderColor: disabled 
+            ? alpha(theme.palette.text.disabled, 0.7)
+              : pressed
+                ? alpha(theme.palette[color].main, 0.85)
+                : hovered
+                  ? alpha(theme.palette[color].main, 0.7)
+                  : alpha(theme.palette[color].main, 0.33),
         };
 
       case "outline":
         return {
-          backgroundColor: pressed
-            ? alpha(theme.palette[color].main, 0.16)
-            : hovered
-              ? alpha(theme.palette[color].main, 0.08)
-              : "transparent",
-          color: theme.palette[color].main,
-          border: `2px solid ${theme.palette[color].main}`,
-          borderColor: pressed
-            ? alpha(theme.palette[color].main, 1)
-            : hovered
-              ? alpha(theme.palette[color].main, 0.8)
-              : "inherit",
+          backgroundColor: disabled
+            ? alpha(theme.palette.text.disabled, 0.08)  
+              : pressed
+              ? alpha(theme.palette[color].main, 0.16)
+              : hovered
+                ? alpha(theme.palette[color].main, 0.08)
+                : "transparent",
+          color: disabled 
+            ? theme.palette.text.disabled 
+            : theme.palette[color].main,
+          border: disabled 
+            ? `2px solid ${theme.palette.text.disabled}`
+            : `2px solid ${theme.palette[color].main}`,
+          borderColor: disabled
+            ? alpha(theme.palette.text.disabled, 0.8)
+              : pressed
+              ? alpha(theme.palette[color].main, 1)
+              : hovered
+                ? alpha(theme.palette[color].main, 0.8)
+                : "inherit",
         };
 
       case "ghost": {
         return {
-          backgroundColor: pressed
-            ? alpha(theme.palette[color].main, 0.16)
-            : hovered
-              ? alpha(theme.palette[color].main, 0.08)
-              : "transparent",
-          color: theme.palette[color].main,
+          backgroundColor: disabled
+            ? alpha(theme.palette.text.disabled, 0.08)
+              : pressed
+              ? alpha(theme.palette[color].main, 0.16)
+              : hovered
+                ? alpha(theme.palette[color].main, 0.08)
+                : "transparent",
+          color: disabled ? theme.palette.text.disabled : theme.palette[color].main,
           border: "none",
         };
       }
@@ -139,6 +157,8 @@ export const Button = ({
     lineHeight: 1,
 
     borderRadius: square ? "0px" : "16px",
+
+    cursor: disabled ? "not-allowed" : "pointer",
 
     ...resolveVariant(),
     ...resolveSize(),
