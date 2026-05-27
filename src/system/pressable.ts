@@ -2,6 +2,7 @@ import { useState } from "react";
 
 type PressableOptions = {
     onPress?: () => void;
+    disabled?: boolean;
 }
 
 type PressableResult = {
@@ -25,27 +26,32 @@ export const usePressable = (props?: PressableOptions): PressableResult => {
     const [pressed, setPressed] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
 
+    const disabled = props?.disabled ?? false;
+
+    const guard = (fn: () => void) => {
+        if (!disabled) fn();
+    };
+
     return {
         hovered,
         pressed,
         focused,
-
+        
         pressableProps: {
-            onMouseEnter: () => setHovered(true),
+            onMouseEnter: () => guard(() => setHovered(true)),
             onMouseLeave: () => { 
+                if (disabled) return;
                 setPressed(false); 
                 setHovered(false);
             },
 
-            onMouseDown: () => setPressed(true),
-            onMouseUp: () => setPressed(false),
+            onMouseDown: () => guard(() => setPressed(true)),
+            onMouseUp: () => guard(() => setPressed(false)),
 
-            onFocus: () => setFocused(true),
-            onBlur: () => setFocused(false),
+            onFocus: () => guard(() => setFocused(true)),
+            onBlur: () => guard(() => setFocused(false)),
             
-            onClick: () => {
-                props?.onPress?.();
-            }
+            onClick: () => guard(() => props?.onPress?.()),
         }
     }
 }

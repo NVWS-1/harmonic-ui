@@ -24,6 +24,15 @@ export const Basic: Story = {
           Ghost
         </Button>
       </Flow>
+      <Typography variant="h4">Disabled</Typography>
+      <Flow direction="horizontal" gap={2} distribute="around">
+        <Button variant="solid" disabled>Solid</Button>
+        <Button variant="soft" disabled>Soft</Button>
+        <Button variant="outline" disabled>Outline</Button>
+        <Button variant="ghost" elevation={0} disabled>
+          Ghost
+        </Button>
+      </Flow>
 
       <Typography variant="h1">Color</Typography>
       <Flow direction="horizontal" gap={2} distribute="around">

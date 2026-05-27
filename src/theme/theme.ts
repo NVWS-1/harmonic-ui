@@ -16,6 +16,11 @@ export const theme = {
       main: "#F6F8FC",
       contrastText: "#111827",
     },
+    text: {
+      main: "#000000",
+      contrastText: "#F6F8FC",
+      disabled: "#ababab"
+    },
   },
   typography: {
     fontFamily: "Arial",
