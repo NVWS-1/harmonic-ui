@@ -15,7 +15,7 @@ type TypographyVariant =
 type TypographyProps = React.HTMLAttributes<HTMLElement> & {
   variant?: TypographyVariant;
   as?: React.ElementType;
-  color?: "primary" | "secondary" | "background";
+  color?: "primary" | "secondary" | "background" | "text";
   contrast?: boolean;
 };
 

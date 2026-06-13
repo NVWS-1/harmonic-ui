@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Typography>;
 export const Basic: Story = {
   argTypes: {
     color: {
-      options: ["primary", "secondary", "default"],
+      options: ["primary", "secondary", "background", "text"],
       control: { type: "radio" },
     },
   },
