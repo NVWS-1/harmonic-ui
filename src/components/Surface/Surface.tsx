@@ -5,7 +5,7 @@ import React from "react";
 type SurfaceProps = React.HTMLAttributes<HTMLDivElement> & {
   sx?: any;
   variant?: "solid" | "soft" | "outline" | "ghost";
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "background";
   square?: boolean;
   elevation?: 0 | 1 | 2 | 3 | 4;
 };
@@ -34,32 +34,49 @@ export const Surface = ({
         return {
           backgroundColor: theme.palette[color].main,
           color: theme.palette[color].contrastText,
-          border: "none",
+          border: `2px solid ${theme.palette[color].main}`,
         };
       }
 
       case "soft": {
         return {
           backgroundColor: alpha(theme.palette[color].main, 0.12),
-          color: theme.palette[color].main,
-          border: `1px solid ${alpha(theme.palette[color].main, 0.23)}`
-        }
+          color:
+            color === "background"
+              ? alpha(theme.palette.background.contrastText, 0.78)
+              : theme.palette[color].main,
+          padding: "25px",
+          border:
+            color === "background"
+              ? `1px solid ${alpha(theme.palette.background.contrastText, 0.23)}`
+              : `1px solid ${alpha(theme.palette[color].main, 0.23)}`,
+        };
       }
 
       case "outline": {
         return {
           backgroundColor: "transparent",
-          color: theme.palette[color].main,
-          border: `2px solid ${theme.palette[color].main}`
-        }
+          color:
+            color === "background"
+              ? theme.palette.background.contrastText
+              : theme.palette[color].main,
+          border:
+            color === "background"
+              ? `2px solid ${theme.palette.background.contrastText}`
+              : `2px solid ${theme.palette[color].main}`,
+        };
       }
 
       case "ghost": {
         return {
           backgroundColor: "transparent",
-          color: theme.palette[color].main,
-          border: "none"
-        }
+          color:
+            color === "background"
+              ? theme.palette.background.contrastText
+              : theme.palette[color].main,
+          padding: "26px",
+          border: "none",
+        };
       }
     }
   };
@@ -75,7 +92,7 @@ export const Surface = ({
 
     transition: "background-color 150ms ease, box-shadow 150ms ease",
 
-    ...resolveVariant()
+    ...resolveVariant(),
   };
 
   return (

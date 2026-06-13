@@ -11,3 +11,4 @@ export * from "./components/Divider";
 export * from "./components/Button";
 export * from "./components/Checkbox";
 export * from "./components/Breadcrumbs";
+export * from "./components/RadioGroup";
